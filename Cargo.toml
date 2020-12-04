@@ -21,3 +21,7 @@ path = "src/aoc2.rs"
 name = "aoc3"
 path = "src/aoc3.rs"
 
+[[bin]]
+name = "aoc4"
+path = "src/aoc4.rs"
+
