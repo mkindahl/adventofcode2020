@@ -18,7 +18,7 @@ fn readpw(regex: &Regex, line: String) -> Record {
     Record {
         first: caps.get(1).unwrap().as_str().parse().unwrap(),
         second: caps.get(2).unwrap().as_str().parse().unwrap(),
-        letter: caps.get(3).unwrap().as_str().chars().nth(0).unwrap(),
+        letter: caps.get(3).unwrap().as_str().chars().next().unwrap(),
         passwd: caps.get(4).unwrap().as_str().to_string(),
     }
 }

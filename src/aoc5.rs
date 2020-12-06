@@ -23,7 +23,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         .lines()
         .map(|line| line.map(seat_id))
         .collect::<Result<Vec<_>, _>>()?;
-    seats.sort();
+    seats.sort_unstable();
 
     // Part 1. Get the maximum seat number of all.
     let max = *seats.last().unwrap();
@@ -35,11 +35,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     // seats and pick the first element where the seat numbers do not
     // match.
     let min = *seats.first().unwrap();
-    let missing = (min..max)
-        .zip(seats)
-        .filter(|(x, y)| *x != *y)
-        .next()
-        .unwrap();
+    let missing = (min..max).zip(seats).find(|(x, y)| *x != *y).unwrap();
     println!("missing seat: {}", missing.0);
     Ok(())
 }

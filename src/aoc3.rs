@@ -27,9 +27,9 @@ impl Map {
                 count += 1;
             }
             col = (col + right) % self.map[row].len();
-            row = row + down;
+            row += down;
         }
-        return count;
+        count
     }
 }
 

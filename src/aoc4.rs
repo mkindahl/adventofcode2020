@@ -6,7 +6,6 @@ use std::error::Error;
 use std::fs::File;
 use std::io::BufReader;
 use std::io::{self, BufRead};
-use std::iter::FromIterator;
 use std::path::{Path, PathBuf};
 
 fn read_passports(path: &Path) -> Result<Vec<Vec<String>>, io::Error> {
@@ -16,7 +15,7 @@ fn read_passports(path: &Path) -> Result<Vec<Vec<String>>, io::Error> {
     let mut paragraph = Vec::new();
     for line in reader.lines() {
         let line = line?;
-        if line.len() == 0 {
+        if line.is_empty() {
             paragraphs.push(paragraph.clone());
             paragraph.clear();
         } else {
@@ -46,8 +45,8 @@ fn check_field(key: &str, value: &str) -> bool {
         "hgt" => {
             let (val, sfx) = value.split_at(value.len() - 2);
             match (val.parse::<u32>(), sfx) {
-                (Ok(num), "cm") => num >= 150 && num <= 193,
-                (Ok(num), "in") => num >= 59 && num <= 76,
+                (Ok(num), "cm") => (150..=193).contains(&num),
+                (Ok(num), "in") => (59..=76).contains(&num),
                 (Err(_), _) | (Ok(_), _) => false,
             }
         }
@@ -75,16 +74,15 @@ fn main() -> Result<(), Box<dyn Error>> {
     path.push("src/aoc4.dat");
 
     let expected_fields = vec!["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"];
-    let expected: HashSet<_, RandomState> = HashSet::from_iter(expected_fields.iter());
+    let expected: HashSet<_, RandomState> = expected_fields.iter().collect();
     let mut valid_passports = 0;
     for paragraph in read_passports(&path)? {
-        let passport: HashMap<&str, &str, RandomState> = HashMap::from_iter(
-            paragraph
-                .iter()
-                .flat_map(|line| line.split(' '))
-                .filter_map(|field| field.split_once(':')),
-        );
-        let keys: HashSet<_, RandomState> = HashSet::from_iter(passport.keys());
+        let passport: HashMap<&str, &str, RandomState> = paragraph
+            .iter()
+            .flat_map(|line| line.split(' '))
+            .filter_map(|field| field.split_once(':'))
+            .collect();
+        let keys: HashSet<_, RandomState> = passport.keys().collect();
         if expected.is_subset(&keys) && valid_fields(&passport) {
             valid_passports += 1;
         }
