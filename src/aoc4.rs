@@ -3,29 +3,14 @@
 use std::collections::hash_map::RandomState;
 use std::collections::{HashMap, HashSet};
 use std::error::Error;
-use std::fs::File;
-use std::io::BufReader;
-use std::io::{self, BufRead};
-use std::path::{Path, PathBuf};
+use std::fs::read_to_string;
+use std::path::PathBuf;
 
-fn read_passports(path: &Path) -> Result<Vec<Vec<String>>, io::Error> {
-    let file = File::open(path)?;
-    let reader = BufReader::new(file);
-    let mut paragraphs = Vec::new();
-    let mut paragraph = Vec::new();
-    for line in reader.lines() {
-        let line = line?;
-        if line.is_empty() {
-            paragraphs.push(paragraph.clone());
-            paragraph.clear();
-        } else {
-            paragraph.push(line);
-        }
-    }
-
-    paragraphs.push(paragraph.clone());
-    paragraph.clear();
-    Ok(paragraphs)
+fn read_passports(contents: &str) -> Vec<Vec<&str>> {
+    contents
+        .split("\n\n")
+        .map(|group| group.lines().collect::<Vec<_>>())
+        .collect()
 }
 
 fn check_field(key: &str, value: &str) -> bool {
@@ -76,7 +61,8 @@ fn main() -> Result<(), Box<dyn Error>> {
     let expected_fields = vec!["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"];
     let expected: HashSet<_, RandomState> = expected_fields.iter().collect();
     let mut valid_passports = 0;
-    for paragraph in read_passports(&path)? {
+    let contents = read_to_string(path)?;
+    for paragraph in read_passports(&contents) {
         let passport: HashMap<&str, &str, RandomState> = paragraph
             .iter()
             .flat_map(|line| line.split(' '))
