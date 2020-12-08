@@ -59,13 +59,29 @@ fn main() -> Result<(), Box<dyn Error>> {
         .keys()
         .filter(|bag| can_contain(&map, bag, &target))
         .count();
-    println!("answer: {:?}", colors);
+    println!("Part 1: {:?}", colors);
+
+    let col = ("shiny".to_string(), "gold".to_string());
+    println!("Part 2: {}", count_nodes(&map, &col));
 
     Ok(())
 }
 
+#[cfg(test)]
 mod tests {
     use super::*;
+
+    const INPUT: &str = r#"
+light red bags contain 1 bright white bag, 2 muted yellow bags.
+dark orange bags contain 3 bright white bags, 4 muted yellow bags.
+bright white bags contain 1 shiny gold bag.
+muted yellow bags contain 2 shiny gold bags, 9 faded blue bags.
+shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.
+dark olive bags contain 3 faded blue bags, 4 dotted black bags.
+vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.
+faded blue bags contain no other bags.
+dotted black bags contain no other bags.
+"#;
 
     #[test]
     fn test_rule_parse() {
@@ -75,22 +91,30 @@ mod tests {
         );
         assert_eq!(
             parse("2 muted yellow bags."),
-            (1, ("muted".to_string(), "yellow".to_string()))
+            (2, ("muted".to_string(), "yellow".to_string()))
         );
     }
 
     #[test]
     fn test_count() {
-        for col in [
-            ("faded".to_string(), "blue".to_string()),
-            ("dotted".to_string(), "black".to_string()),
-            ("vibrant".to_string(), "plum".to_string()),
-            ("dark".to_string(), "olive".to_string()),
-            ("shiny".to_string(), "gold".to_string()),
-        ]
-        .iter()
-        {
-            println!("{:?}: {}", col, count_nodes(&map, &col));
+        let examples = [
+            (("faded".to_string(), "blue".to_string()), 0),
+            (("dotted".to_string(), "black".to_string()), 0),
+            (("vibrant".to_string(), "plum".to_string()), 11),
+            (("dark".to_string(), "olive".to_string()), 7),
+            (("shiny".to_string(), "gold".to_string()), 32),
+        ];
+
+        let mut map = HashMap::new();
+        for line in INPUT.trim().lines() {
+            let (key, tail) = line.trim().split_once("contain").unwrap();
+            let bags: Vec<_> = tail.split(',').map(|b| parse(b)).collect();
+            let rule = parse(key).1;
+            assert!(map.insert(rule, bags).is_none());
+        }
+
+        for (col, expected) in &examples {
+            assert_eq!(count_nodes(&map, col), *expected, "color: {:?}", col);
         }
     }
 }
