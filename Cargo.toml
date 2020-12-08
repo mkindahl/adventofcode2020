@@ -33,3 +33,7 @@ path = "src/aoc5.rs"
 name = "aoc6"
 path = "src/aoc6.rs"
 
+[[bin]]
+name = "aoc7"
+path = "src/aoc7.rs"
+
