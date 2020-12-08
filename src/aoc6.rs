@@ -5,13 +5,6 @@ use std::error::Error;
 use std::fs::read_to_string;
 use std::path::PathBuf;
 
-fn read_forms(contents: &str) -> Vec<Vec<&str>> {
-    contents
-        .split("\n\n")
-        .map(|group| group.lines().collect::<Vec<_>>())
-        .collect()
-}
-
 fn part1(forms: &[Vec<&str>]) -> usize {
     forms
         .iter()
@@ -44,7 +37,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     path.push("src/aoc6.dat");
     let contents = read_to_string(path)?;
-    let forms = read_forms(&contents);
+    let forms: Vec<Vec<&str>> = contents
+        .split("\n\n")
+        .map(|group| group.lines().collect::<Vec<_>>())
+        .collect();
 
     // Part 1
     println!("part 1: {:?}", part1(&forms));
