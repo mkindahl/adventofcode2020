@@ -41,7 +41,7 @@ impl Instr {
 }
 
 impl Machine {
-    fn run(&mut self, program: &Vec<Instr>) -> bool {
+    fn run(&mut self, program: &[Instr]) -> bool {
         let mut visited = HashSet::new();
         loop {
             if (self.pc + 1) as usize == program.len() {
