@@ -41,3 +41,7 @@ path = "src/aoc7.rs"
 name = "aoc8"
 path = "src/aoc8.rs"
 
+[[bin]]
+name = "aoc9"
+path = "src/aoc9.rs"
+
