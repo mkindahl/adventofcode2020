@@ -1,9 +1,10 @@
 use regex::Regex;
-use std::error::Error;
-use std::fs::File;
-use std::io::prelude::*;
-use std::io::BufReader;
-use std::path::PathBuf;
+use std::{
+    error::Error,
+    fs::File,
+    io::{prelude::*, BufReader},
+    path::PathBuf,
+};
 
 #[derive(Debug)]
 struct Record {

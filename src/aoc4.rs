@@ -1,10 +1,11 @@
 #![feature(str_split_once)]
 
-use std::collections::hash_map::RandomState;
-use std::collections::{HashMap, HashSet};
-use std::error::Error;
-use std::fs::read_to_string;
-use std::path::PathBuf;
+use std::{
+    collections::{hash_map::RandomState, HashMap, HashSet},
+    error::Error,
+    fs::read_to_string,
+    path::PathBuf,
+};
 
 fn read_passports(contents: &str) -> Vec<Vec<&str>> {
     contents

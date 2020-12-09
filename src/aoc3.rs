@@ -1,10 +1,10 @@
-use std::error::Error;
-use std::fs::File;
-use std::io;
-use std::io::BufRead;
-use std::io::BufReader;
-use std::path::Path;
-use std::path::PathBuf;
+use std::{
+    error::Error,
+    fs::File,
+    io,
+    io::{BufRead, BufReader},
+    path::{Path, PathBuf},
+};
 
 struct Map {
     map: Vec<Vec<u8>>,

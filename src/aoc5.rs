@@ -1,8 +1,9 @@
-use std::error::Error;
-use std::fs::File;
-use std::io::BufRead;
-use std::io::BufReader;
-use std::path::PathBuf;
+use std::{
+    error::Error,
+    fs::File,
+    io::{BufRead, BufReader},
+    path::PathBuf,
+};
 
 fn seat_id<S: Into<String>>(line: S) -> u32 {
     // Read the bits as a binary number and split it into the parts

@@ -1,9 +1,6 @@
 #![feature(iterator_fold_self)]
 
-use std::collections::HashSet;
-use std::error::Error;
-use std::fs::read_to_string;
-use std::path::PathBuf;
+use std::{collections::HashSet, error::Error, fs::read_to_string, path::PathBuf};
 
 fn part1(forms: &[Vec<&str>]) -> usize {
     forms
