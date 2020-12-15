@@ -62,3 +62,7 @@ path = "src/aoc12.rs"
 name = "aoc13"
 path = "src/aoc13.rs"
 
+[[bin]]
+name = "aoc14"
+path = "src/aoc14.rs"
+
