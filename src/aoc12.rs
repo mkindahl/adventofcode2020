@@ -52,7 +52,7 @@ impl State {
         State { pos, waypoint }
     }
 
-    fn run<F>(&mut self, actions: &Vec<Action>, transform: F)
+    fn run<F>(&mut self, actions: &[Action], transform: F)
     where
         F: Fn(&mut State, &Action),
     {

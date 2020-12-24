@@ -80,9 +80,9 @@ fn gen_masks_1(masks: Vec<(usize, usize)>, c: char) -> Vec<(usize, usize)> {
     masks
         .iter()
         .map(|(x, y)| match c {
-            '0' => (x << 1 | 0, y << 1 | 0),
+            '0' => (x << 1, y << 1),
             '1' => (x << 1 | 1, y << 1 | 1),
-            'X' => (x << 1 | 0, y << 1 | 1),
+            'X' => (x << 1, y << 1 | 1),
             _ => todo!(),
         })
         .collect()
@@ -90,17 +90,14 @@ fn gen_masks_1(masks: Vec<(usize, usize)>, c: char) -> Vec<(usize, usize)> {
 
 fn gen_masks_2(masks: Vec<(usize, usize)>, c: char) -> Vec<(usize, usize)> {
     match c {
-        '0' => masks
-            .iter()
-            .map(|(x, y)| (x << 1 | 0, y << 1 | 1))
-            .collect(),
+        '0' => masks.iter().map(|(x, y)| (x << 1, y << 1 | 1)).collect(),
         '1' => masks
             .iter()
             .map(|(x, y)| (x << 1 | 1, y << 1 | 1))
             .collect(),
         'X' => masks
             .iter()
-            .flat_map(|(x, y)| vec![(x << 1 | 1, y << 1 | 0), (x << 1 | 0, y << 1 | 0)])
+            .flat_map(|(x, y)| vec![(x << 1 | 1, y << 1), (x << 1, y << 1)])
             .collect(),
         _ => todo!(),
     }

@@ -1,10 +1,9 @@
-use std::{collections::HashMap, error::Error};
+use std::collections::HashMap;
 
-fn main() -> Result<(), Box<dyn Error>> {
+fn main() {
     let numbers = [6, 3, 15, 13, 1, 0];
     println!("Part 1: {:?}", play(&numbers, 2020));
     println!("Part 2: {:?}", play(&numbers, 30000000));
-    Ok(())
 }
 
 fn play(numbers: &[usize], nth: usize) -> usize {

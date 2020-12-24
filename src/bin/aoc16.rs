@@ -42,7 +42,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-fn part1(rules: &HashMap<String, Rule>, tickets: &Vec<Vec<usize>>) {
+fn part1(rules: &HashMap<String, Rule>, tickets: &[Vec<usize>]) {
     let mut found = Vec::new();
     'ticket: for ticket in tickets {
         let mut invalid: HashSet<usize> = ticket.iter().cloned().collect();
@@ -59,13 +59,13 @@ fn part1(rules: &HashMap<String, Rule>, tickets: &Vec<Vec<usize>>) {
     println!("Part 1: {:?}", found.iter().sum::<usize>());
 }
 
-fn part2(your: &Vec<usize>, rules: &HashMap<String, Rule>, nearby: &Vec<Vec<usize>>) {
+fn part2(your: &[usize], rules: &HashMap<String, Rule>, nearby: &[Vec<usize>]) {
     let mut tickets: Vec<Vec<usize>> = nearby
         .iter()
         .filter(|ticket| is_valid_ticket(rules, ticket))
         .cloned()
         .collect();
-    tickets.push(your.clone());
+    tickets.push(your.to_vec());
     let matching = compute_matching(&rules, &tickets);
     let mut order: Vec<usize> = (0..matching.len()).collect();
     order.sort_by(|x, y| matching[*x].len().cmp(&matching[*y].len()));
@@ -85,7 +85,7 @@ fn part2(your: &Vec<usize>, rules: &HashMap<String, Rule>, nearby: &Vec<Vec<usiz
 
 fn compute_matching<'a>(
     rules: &'a HashMap<String, Rule>,
-    tickets: &Vec<Vec<usize>>,
+    tickets: &[Vec<usize>],
 ) -> Vec<Vec<&'a Rule>> {
     let mut matching = Vec::new();
     for index in 0..tickets[0].len() {
@@ -109,10 +109,10 @@ fn recurse(
     path: Vec<String>,
     order: &[usize],
     rules: &HashMap<String, Rule>,
-    tickets: &Vec<Vec<usize>>,
-    matching: &Vec<Vec<&Rule>>,
+    tickets: &[Vec<usize>],
+    matching: &[Vec<&Rule>],
 ) -> Option<Vec<String>> {
-    if order.len() > 0 {
+    if !order.is_empty() {
         //        println!("path: {:?}, index: {}", path, index);
         for rule in matching[order[0]]
             .iter()
@@ -130,7 +130,7 @@ fn recurse(
     }
 }
 
-fn is_valid_ticket(rules: &HashMap<String, Rule>, ticket: &Vec<usize>) -> bool {
+fn is_valid_ticket(rules: &HashMap<String, Rule>, ticket: &[usize]) -> bool {
     ticket
         .iter()
         .all(|val| rules.iter().any(|(_, rule)| rule.good(*val)))
@@ -167,7 +167,7 @@ impl Rule {
     }
 }
 
-fn get_invalid(rule: &Rule, ticket: &Vec<usize>) -> Vec<usize> {
+fn get_invalid(rule: &Rule, ticket: &[usize]) -> Vec<usize> {
     ticket.iter().filter(|&n| !rule.good(*n)).cloned().collect()
 }
 

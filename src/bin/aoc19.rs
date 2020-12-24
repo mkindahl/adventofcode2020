@@ -19,7 +19,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-fn part1(rules: &HashMap<usize, Body>, messages: &Vec<&str>) -> usize {
+fn part1(rules: &HashMap<usize, Body>, messages: &[&str]) -> usize {
     let restr = format!("^{}$", build_regex(rules, 0));
     let regex = Regex::new(&restr).unwrap();
     messages.iter().filter(|msg| regex.is_match(msg)).count()
@@ -30,7 +30,7 @@ fn part1(rules: &HashMap<usize, Body>, messages: &Vec<&str>) -> usize {
 // is "42 42 42 31 31", etc. So we expand create a regexp that matches
 // a series of at lest one 42s and a series of at least one 31s and
 // ensure that there are more 42s than 31s (strictly).
-fn part2(rules: &HashMap<usize, Body>, messages: &Vec<&str>) -> usize {
+fn part2(rules: &HashMap<usize, Body>, messages: &[&str]) -> usize {
     let fortytwo = build_regex(rules, 42);
     let thirtyone = build_regex(rules, 31);
     let full = format!("^({}+)({}+)$", fortytwo, thirtyone);
@@ -74,7 +74,7 @@ fn from_str(line: &str) -> Result<(usize, Body), MyError> {
             .collect();
         let body = match parts {
             Ok(parts) => Body::Alt(parts),
-            Err(_) => Body::Char(body.trim().chars().skip(1).next().unwrap()),
+            Err(_) => Body::Char(body.trim().chars().nth(1).unwrap()),
         };
         Ok((no.parse().unwrap(), body))
     } else {

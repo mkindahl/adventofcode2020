@@ -32,7 +32,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
 fn run<F>(mut board: Vec<Vec<u8>>, limit: usize, check: F) -> usize
 where
-    F: Fn(&Vec<Vec<u8>>, usize, usize) -> usize,
+    F: Fn(&[Vec<u8>], usize, usize) -> usize,
 {
     let rows = board.len();
     let cols = board[0].len();
@@ -68,7 +68,7 @@ where
     }
 }
 
-fn occupied(board: &Vec<Vec<u8>>, row: usize, col: usize, dir: (isize, isize)) -> bool {
+fn occupied(board: &[Vec<u8>], row: usize, col: usize, dir: (isize, isize)) -> bool {
     let mut row: isize = row as isize + dir.0;
     let mut col: isize = col as isize + dir.1;
     while 0 <= row
@@ -83,13 +83,13 @@ fn occupied(board: &Vec<Vec<u8>>, row: usize, col: usize, dir: (isize, isize)) -
             b'L' => return false,
             _ => (),
         }
-        row = row + dir.0;
-        col = col + dir.1;
+        row += dir.0;
+        col += dir.1;
     }
-    return false;
+    false
 }
 
-fn visible_occupied(board: &Vec<Vec<u8>>, row: usize, col: usize) -> usize {
+fn visible_occupied(board: &[Vec<u8>], row: usize, col: usize) -> usize {
     let dirs = vec![
         (-1, -1),
         (-1, 0),
@@ -112,10 +112,10 @@ fn visible_occupied(board: &Vec<Vec<u8>>, row: usize, col: usize) -> usize {
             //     println!("not occupied - row: {}, col: {}, dir:{:?}", row, col, dir);
         }
     }
-    return result;
+    result
 }
 
-fn nearby_occupied(board: &Vec<Vec<u8>>, row: usize, col: usize) -> usize {
+fn nearby_occupied(board: &[Vec<u8>], row: usize, col: usize) -> usize {
     let mut result = 0;
     for i in dec(row)..(row + 2) {
         for j in dec(col)..(col + 2) {
@@ -127,5 +127,5 @@ fn nearby_occupied(board: &Vec<Vec<u8>>, row: usize, col: usize) -> usize {
             }
         }
     }
-    return result;
+    result
 }

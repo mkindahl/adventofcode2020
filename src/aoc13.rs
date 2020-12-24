@@ -4,10 +4,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     path.push("src/aoc13.dat");
     let contents = read_to_string(path)?;
-    let cvec: Vec<&str> = contents.split("\n").collect();
+    let cvec: Vec<&str> = contents.split('\n').collect();
     let timestamp: isize = cvec[0].parse()?;
     let (line, departure) = cvec[1]
-        .split(",")
+        .split(',')
         .filter_map(|s| s.parse::<isize>().ok())
         .map(|x| (x, x - timestamp % x))
         .min_by(|x, y| x.1.cmp(&y.1))
@@ -15,7 +15,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     println!("Part 1: {}", line * departure);
 
     let solution = cvec[1]
-        .split(",")
+        .split(',')
         .enumerate()
         .filter_map(|(e, s)| s.parse::<isize>().ok().map(|x| (e as isize, x)))
         .collect::<Vec<(isize, isize)>>();
