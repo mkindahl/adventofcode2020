@@ -15,7 +15,7 @@ fn dec(x: usize) -> usize {
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    path.push("src/aoc11.dat");
+    path.push("src/bin/aoc11.dat");
     let file = File::open(path)?;
     let reader = BufReader::new(file);
 

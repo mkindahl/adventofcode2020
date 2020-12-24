@@ -35,7 +35,7 @@ impl Map {
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    path.push("src/aoc3.dat");
+    path.push("src/bin/aoc3.dat");
     let map = Map::new(&path)?;
 
     // Part 1

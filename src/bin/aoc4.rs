@@ -57,7 +57,7 @@ fn valid_fields<S>(passport: &HashMap<&str, &str, S>) -> bool {
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    path.push("src/aoc4.dat");
+    path.push("src/bin/aoc4.dat");
 
     let expected_fields = vec!["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"];
     let expected: HashSet<_, RandomState> = expected_fields.iter().collect();

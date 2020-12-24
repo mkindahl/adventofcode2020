@@ -32,7 +32,7 @@ fn part2(forms: &[Vec<&str>]) -> usize {
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    path.push("src/aoc6.dat");
+    path.push("src/bin/aoc6.dat");
     let contents = read_to_string(path)?;
     let forms: Vec<Vec<&str>> = contents
         .split("\n\n")

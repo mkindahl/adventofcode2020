@@ -9,7 +9,7 @@ use std::{
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    path.push("src/aoc14.dat");
+    path.push("src/bin/aoc14.dat");
     let file = File::open(path)?;
     let reader = BufReader::new(file);
     let lines = reader

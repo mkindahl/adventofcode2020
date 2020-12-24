@@ -34,7 +34,7 @@ fn part2(numbers: &[usize], number: usize) -> Option<usize> {
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    path.push("src/aoc9.dat");
+    path.push("src/bin/aoc9.dat");
     let file = File::open(path)?;
     let reader = BufReader::new(file);
     let numbers: Vec<usize> = reader

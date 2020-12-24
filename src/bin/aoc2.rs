@@ -26,7 +26,7 @@ fn readpw(regex: &Regex, line: String) -> Record {
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    path.push("src/aoc2.dat");
+    path.push("src/bin/aoc2.dat");
     let file = File::open(path)?;
     let input = BufReader::new(file);
     let regex = Regex::new(r"(\d+)-(\d+) *(\w): *(.*)").unwrap();

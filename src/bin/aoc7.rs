@@ -43,7 +43,7 @@ fn count_nodes(map: &HashMap<Bag, Vec<(usize, Bag)>>, start: &Bag) -> usize {
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    path.push("src/aoc7.dat");
+    path.push("src/bin/aoc7.dat");
     let file = File::open(path)?;
     let reader = BufReader::new(file);
     let mut map = HashMap::new();

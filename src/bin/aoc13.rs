@@ -2,7 +2,7 @@ use std::{error::Error, fs::read_to_string, path::PathBuf};
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    path.push("src/aoc13.dat");
+    path.push("src/bin/aoc13.dat");
     let contents = read_to_string(path)?;
     let cvec: Vec<&str> = contents.split('\n').collect();
     let timestamp: isize = cvec[0].parse()?;

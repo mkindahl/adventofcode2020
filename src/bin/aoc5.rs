@@ -17,7 +17,7 @@ fn seat_id<S: Into<String>>(line: S) -> u32 {
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    path.push("src/aoc5.dat");
+    path.push("src/bin/aoc5.dat");
     let file = File::open(path)?;
     let reader = BufReader::new(file);
     let mut seats = reader
