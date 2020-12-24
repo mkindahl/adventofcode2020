@@ -10,7 +10,7 @@ use std::{
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    path.push("src/aoc16.dat");
+    path.push("src/bin/aoc16.dat");
     let contents = read_to_string(path)?;
     let parts: Vec<_> = contents.split("\n\n").collect();
     let rules = parse_rules(parts[0]);
